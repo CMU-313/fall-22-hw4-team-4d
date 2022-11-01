@@ -33,7 +33,7 @@ def configure_routes(app):
             'absences': pd.Series(absences),
             'G3':pd.Series(G3),
             'Dalc':pd.Series(Dalc),
-            activities:pd.Series(activities)
+            'activities':pd.Series(activities)
         })
         query = pd.get_dummies(query_df)
         prediction = clf.predict(query)
