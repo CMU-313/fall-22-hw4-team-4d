@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Swagger Student Admission - OpenAPI 3.0
+  description: >-
+    Swagger Documentation on student prediction system for student admission to
+    CMU
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost/
+tags:
+  - name: index
+    description: Index page on student admission system
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: predict
+    description: Access to prediction on a single student
+    externalDocs:
+      description: Find out more about predictions
+      url: http://swagger.io
+paths:
+  /:
+    get:
+      tags:
+        - index
+      summary: Finds information on index page
+      description: Gets information from the index page of
+      operationId: findIndex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: try the predict route it is great!
+        '400':
+          description: Invalid status value
+  /predict:
+    get:
+      tags:
+        - predict
+      summary: Finds information on predict page
+      description: Gets information from the predict page of student
+      operationId: findPredictByStudent
+      parameters:
+        - name: age
+          in: query
+          description: age of student for prediction
+          required: true
+          schema:
+            type: integer
+            example: 18
+            minimum: 15
+            maximum: 22
+        - name: absences
+          in: query
+          description: number of absences of student for prediction
+          required: true
+          explode: true
+          schema:
+            type: integer
+            example: 2
+            minimum: 0
+            maximum: 93
+        - name: health
+          in: query
+          description: health index of student for prediction
+          required: true
+          explode: true
+          schema:
+            type: string
+            enum:
+              - 1 - very bad
+              - 2 - bad
+              - 3 - regular
+              - 4 - good
+              - 5 - very good
+            example: 3 - regular
+        - name: G3
+          in: query
+          description: g3 index of student for prediction
+          required: true
+          explode: true
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 20
+            example: 10
+        - name: Dalc
+          in: query
+          description: dalc index of student for prediction
+          required: true
+          explode: true
+          schema:
+            type: string
+            enum:
+              - 1 - very low
+              - 2 - low
+              - 3 - regular
+              - 4 - high
+              - 5 - very high
+            example: 2 - low
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 1
+        '400':
+          description: Invalid input
