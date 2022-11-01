@@ -22,11 +22,18 @@ def configure_routes(app):
         age = request.args.get('age')
         absences = request.args.get('absences')
         health = request.args.get('health')
-        data = [[age], [health], [absences]]
+        G3 = request.args.get('G3')
+        Dalc = request.args.get('Dalc')
+        activities = request.args.get('activites')
+
+        data = [[age], [health], [absences], [G3], [Dalc], [activities]]
         query_df = pd.DataFrame({
             'age': pd.Series(age),
             'health': pd.Series(health),
-            'absences': pd.Series(absences)
+            'absences': pd.Series(absences),
+            'G3':pd.Series(G3),
+            'Dalc':pd.Series(Dalc),
+            'activities':pd.Series(activities)
         })
         query = pd.get_dummies(query_df)
         prediction = clf.predict(query)
