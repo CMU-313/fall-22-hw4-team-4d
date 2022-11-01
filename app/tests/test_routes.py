@@ -69,4 +69,24 @@ def test_predict_route_invalid():
     response = client.get(url12)
     assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
 
+    url13 = '/predict?age=bad&absences=19&health=3&G3=1&Dalc=3&activities=yes'
+    response = client.get(url13)
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+
+    url14 = '/predict?age=18&absences=bad&health=3&G3=1&Dalc=3&activities=yes'
+    response = client.get(url14)
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+
+    url15 = '/predict?age=18&absences=19&health=bad&G3=1&Dalc=3&activities=yes'
+    response = client.get(url15)
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+
+    url16 = '/predict?age=18&absences=19&health=3&G3=bad&Dalc=3&activities=yes'
+    response = client.get(url16)
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+
+    url17 = '/predict?age=18&absences=19&health=3&G3=1&Dalc=bad&activities=yes'
+    response = client.get(url17)
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+
 
