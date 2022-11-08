@@ -28,33 +28,33 @@ def configure_routes(app):
 
         try:
             intHealth = int(health)
-            if intHealth < 0 or intHealth > 5:
+            if intHealth <=0 or intHealth > 5:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
             intAbsences = int(absences)
             if intAbsences < 0 or intAbsences > 93:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
             intMedu = int(Medu)
             if intMedu < 0 or intMedu > 4:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
             intFedu = int(Fedu)
             if intFedu < 0 or intFedu > 4:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
             intDalc = int(Dalc)
-            if intDalc < 0 or intDalc > 5:
+            if intDalc <= 0 or intDalc > 5:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
         except Exception:
                 raise HTTPException(
-                    status_code=500,
+                    status_code=500
                 )
 
         data = [[health], [absences], [Medu], [Fedu], [Dalc]]
