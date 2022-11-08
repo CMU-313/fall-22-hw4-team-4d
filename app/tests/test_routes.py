@@ -23,29 +23,29 @@ def test_predict_route_valid():
     url1 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response1 = client.get(url1)
     assert response1.status_code == 200
-    assert response1.get_data() == b'0\n'
+    assert response1.get_data() == b'1\n'
 
     # Test 2
-    url2 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
+    url2 = '/predict?health=5&absences=20&Medu=1&Fedu=4&Dalc=1'
     response2 = client.get(url2)
     assert response2.status_code == 200
     assert response2.get_data() == b'0\n'
 
     # Test 3
-    url3 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
+    url3 = '/predict?health=5&absences=0&Medu=4&Fedu=3&Dalc=1'
     response3 = client.get(url3)
     assert response3.status_code == 200
-    assert response3.get_data() == b'0\n'
+    assert response3.get_data() == b'1\n'
 
     # Test 4
-    url4 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
+    url4 = '/predict?health=5&absences=15&Medu=4&Fedu=2&Dalc=5'
     response4 = client.get(url4)
     assert response4.status_code == 200
     assert response4.get_data() == b'0\n'
 
 
     # Test 5
-    url5 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
+    url5 = '/predict?health=1&absences=2&Medu=1&Fedu=1&Dalc=5'
     response5 = client.get(url5)
     assert response5.status_code == 200
     assert response5.get_data() == b'0\n'
