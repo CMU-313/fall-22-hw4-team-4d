@@ -1,3 +1,4 @@
+from http.client import HTTPException
 import this
 from flask import Flask, jsonify, request
 import joblib
@@ -24,6 +25,37 @@ def configure_routes(app):
         Medu = request.args.get('Medu')
         Fedu = request.args.get('Fedu')
         Dalc = request.args.get('Dalc')
+
+        try:
+            intHealth = int(health)
+            if intHealth < 0 or intHealth > 5:
+                raise HTTPException(
+                    status_code=500,
+                )
+            intAbsences = int(absences)
+            if intAbsences < 0 or intAbsences > 93:
+                raise HTTPException(
+                    status_code=500,
+                )
+            intMedu = int(Medu)
+            if intMedu < 0 or intMedu > 4:
+                raise HTTPException(
+                    status_code=500,
+                )
+            intFedu = int(Fedu)
+            if intFedu < 0 or intFedu > 4:
+                raise HTTPException(
+                    status_code=500,
+                )
+            intDalc = int(Dalc)
+            if intDalc < 0 or intDalc > 5:
+                raise HTTPException(
+                    status_code=500,
+                )
+        except Exception:
+                raise HTTPException(
+                    status_code=500,
+                )
 
         data = [[health], [absences], [Medu], [Fedu], [Dalc]]
         query_df = pd.DataFrame({

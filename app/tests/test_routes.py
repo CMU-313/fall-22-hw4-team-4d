@@ -20,35 +20,35 @@ def test_predict_route_valid():
     client = app.test_client()
 
     # Test 1
-    url1 = '/predict?age=30&absences=92&health=5&G3=20&Dalc=5&activities=yes'
+    url1 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response1 = client.get(url1)
     assert response1.status_code == 200
     assert response1.get_data() == b'0\n'
 
     # Test 2
-    url2 = '/predict?age=17&absences=1&health=5&G3=20&Dalc=4&activities=yes'
+    url2 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response2 = client.get(url2)
     assert response2.status_code == 200
     assert response2.get_data() == b'0\n'
 
     # Test 3
-    url3 = '/predict?age=17&absences=3&health=5&G3=20&Dalc=1&activities=yes'
+    url3 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response3 = client.get(url3)
     assert response3.status_code == 200
-    assert response3.get_data() == b'1\n'
+    assert response3.get_data() == b'0\n'
 
     # Test 4
-    url4 = '/predict?age=17&absences=40&health=4&G3=15&Dalc=5&activities=yes'
+    url4 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response4 = client.get(url4)
     assert response4.status_code == 200
     assert response4.get_data() == b'0\n'
 
 
     # Test 5
-    url5 = '/predict?age=20&absences=15&health=5&G3=20&Dalc=1&activities=yes'
+    url5 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=1'
     response5 = client.get(url5)
     assert response5.status_code == 200
-    assert response5.get_data() == b'1\n'
+    assert response5.get_data() == b'0\n'
     
 
 
@@ -58,74 +58,71 @@ def test_predict_route_invalid():
     client = app.test_client()
     
     #missing inputs
-    url = '/predict?age=18&absences=19&health=3&G3=10&Dalc=3'
+    url = '/predict?health=5&absences=2&Medu=4&Fedu=4'
     response = client.get(url)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
     url2 = '/predict?age=18'
-    response = client.get(url2)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    response2 = client.get(url2)
+    assert response2.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
     url3 = '/predict'
-    response = client.get(url3)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    response3 = client.get(url3)
+    assert response3.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
     #invalid inputs
-    url4 = '/predict?age=14&absences=19&health=3&G3=1&Dalc=3&activities=yes'
-    response = client.get(url4)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url4 = '/predict?absences=19&health=3&Dalc=3'
+    response4 = client.get(url4)
+    assert response4.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url5 = '/predict?age=23&absences=19&health=3&G3=1&Dalc=3&activities=yes'
-    response = client.get(url5)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url5 = '/predict?absences=19&health=3&G3=1&Dalc=3'
+    response5 = client.get(url5)
+    assert response5.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url6 = '/predict?age=18&absences=94&health=3&G3=1&Dalc=3&activities=yes'
-    response = client.get(url6)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url6 = '/predict?health=5&absences=2000&Medu=4&Fedu=4&Dalc=1'
+    response6 = client.get(url6)
+    assert response6.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url7 = '/predict?age=18&absences=19&health=0&G3=1&Dalc=3&activities=yes'
-    response = client.get(url7)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url7 = '/predict?health=5&absences=-5&Medu=4&Fedu=4&Dalc=1'
+    response7 = client.get(url7)
+    assert response7.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url8 = '/predict?age=18&absences=19&health=6&G3=1&Dalc=3&activities=yes'
-    response = client.get(url8)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url8 = '/predict?health=-5&absences=5&Medu=4&Fedu=4&Dalc=1'
+    response8 = client.get(url8)
+    assert response8.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url9 = '/predict?age=18&absences=19&health=3&G3=21&Dalc=3&activities=yes'
-    response = client.get(url9)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url9 = '/predict?health=300&absences=5&Medu=4&Fedu=4&Dalc=1'
+    response9 = client.get(url9)
+    assert response9.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url10 = '/predict?age=18&absences=19&health=3&G3=1&Dalc=0&activities=yes'
-    response = client.get(url10)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url10 = '/predict?health=5&absences=2&Medu=20&Fedu=4&Dalc=1'
+    response10 = client.get(url10)
+    assert response10.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url11 = '/predict?age=18&absences=19&health=3&G3=1&Dalc=6&activities=yes'
-    response = client.get(url11)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url11 = '/predict?health=5&absences=2&Medu=-4&Fedu=4&Dalc=1'
+    response11 = client.get(url11)
+    assert response11.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url12 = '/predict?age=18&absences=19&health=3&G3=1&Dalc=3&activities=bad'
-    response = client.get(url12)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url12 = '/predict?health=5&absences=2&Medu=20&Fedu=4&Dalc=1'
+    response12 = client.get(url12)
+    assert response12.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url13 = '/predict?age=bad&absences=19&health=3&G3=1&Dalc=3&activities=yes'
-    response = client.get(url13)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url13 = '/predict?health=5&absences=2&Medu=2&Fedu=-4&Dalc=1'
+    response13 = client.get(url13)
+    assert response13.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url14 = '/predict?age=18&absences=bad&health=3&G3=1&Dalc=3&activities=yes'
-    response = client.get(url14)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url14 = '/predict?health=5&absences=2&Medu=4&Fedu=20&Dalc=1'
+    response14 = client.get(url14)
+    assert response14.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url15 = '/predict?age=18&absences=19&health=bad&G3=1&Dalc=3&activities=yes'
-    response = client.get(url15)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url15 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=-1'
+    response15 = client.get(url15)
+    assert response15.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url16 = '/predict?age=18&absences=19&health=3&G3=bad&Dalc=3&activities=yes'
-    response = client.get(url16)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
+    url16 = '/predict?health=5&absences=2&Medu=4&Fedu=4&Dalc=21'
+    response16 = client.get(url16)
+    assert response16.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
 
-    url17 = '/predict?age=18&absences=19&health=3&G3=1&Dalc=bad&activities=yes'
-    response = client.get(url17)
-    assert response.get_data() == b'<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>400 Bad Request</h1>\n<p>Invalid input.</p>\n'
-
-
-
+    url17 = '/predict?health=health&absences=2&Medu=4&Fedu=4&Dalc=1'
+    response17 = client.get(url17)
+    assert response17.get_data() == b'<!doctype html>\n<html lang=en>\n<title>500 Internal Server Error</title>\n<h1>Internal Server Error</h1>\n<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>\n'
