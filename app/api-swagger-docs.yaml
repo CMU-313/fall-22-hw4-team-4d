@@ -53,25 +53,6 @@ paths:
       description: Gets information from the predict page of student
       operationId: findPredictByStudent
       parameters:
-        - name: age
-          in: query
-          description: age of student for prediction
-          required: true
-          schema:
-            type: integer
-            example: 18
-            minimum: 15
-            maximum: 22
-        - name: absences
-          in: query
-          description: number of absences of student for prediction
-          required: true
-          explode: true
-          schema:
-            type: integer
-            example: 2
-            minimum: 0
-            maximum: 93
         - name: health
           in: query
           description: health index of student for prediction
@@ -86,16 +67,36 @@ paths:
               - 4 - good
               - 5 - very good
             example: 3 - regular
-        - name: G3
+        - name: absences
           in: query
-          description: g3 index of student for prediction
+          description: number of absences of student for prediction
+          required: true
+          explode: true
+          schema:
+            type: integer
+            example: 2
+            minimum: 0
+            maximum: 93
+        - name: Medu
+          in: query
+          description: mother's education of the student
           required: true
           explode: true
           schema:
             type: integer
             minimum: 0
-            maximum: 20
-            example: 10
+            maximum: 4
+            example: 4
+        - name: Fedu
+          in: query
+          description: father's education of the student
+          required: true
+          explode: true
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 4
+            example: 4
         - name: Dalc
           in: query
           description: dalc index of student for prediction
