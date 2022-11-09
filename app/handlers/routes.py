@@ -5,6 +5,7 @@ import joblib
 import pandas as pd
 import numpy as np
 import os
+# Source used for raise exception code: https://discuss.python.org/t/provide-the-response-body-from-the-http-server-when-return-the-httperror/16342
 
 def configure_routes(app):
 
@@ -59,12 +60,11 @@ def configure_routes(app):
 
         data = [[health], [absences], [Medu], [Fedu], [Dalc]]
         query_df = pd.DataFrame({
-            'health': pd.Series(health),
-            'absences': pd.Series(absences),
-            'Medu':pd.Series(Medu),
-            'Fedu':pd.Series(Fedu),
-            'Dalc':pd.Series(Dalc)
-            
+            'Dalc':pd.Series(int(Dalc)),
+            'Fedu':pd.Series(int(Fedu)),
+            'Medu':pd.Series(int(Medu)),
+            'absences': pd.Series(int(absences)),
+            'health': pd.Series(int(health))
         })
         query = pd.get_dummies(query_df)
         prediction = clf.predict(query)
