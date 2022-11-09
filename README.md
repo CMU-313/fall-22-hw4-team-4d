@@ -11,7 +11,7 @@ The model used was a random forest classier because it produces more precise and
 - Fedu: father's education (numeric: 0 - none,  1 - primary education (4th grade), 2 – 5th to 9th grade, 3 – secondary education or 4 – higher education)
 - Dalc: workday alcohol consumption (numeric: from 1 - very low to 5 - very high)
 
-###Justification
+### Justification
 These features were selected because we believed that they directly influenced the student's performance and gave the highest accuracy compared to the other models we tested with a different set/combination of features. A student's well-being is crucial to deliver higher performance because the student will have lower burnout rates, be sick for fewer days, increase productivity, etc. Therefore, health and Dalc are features that directly impact the student well-being. Furthermore, the number of absences also influences the performance of a student because the student will not fall behind with their coursework if they have fewer absences. On the other hand, if the student continues to miss class, they will fall behind the coursework and have to catch up with work making it more difficult to perform well. In addition, Medu and Fedu were selected because we believed that a student whose parents went to secondary education or higher education is more encouraged to pursue higher education, thus putting more effort into performing well.
 
 ## Training Model
