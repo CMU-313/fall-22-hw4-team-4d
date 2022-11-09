@@ -1,5 +1,27 @@
-# swagger documentation
+# Swagger Documentation
 `api-doc.yaml` is under `/app` directory
+
+
+# Model Documentation
+The model used was a random forest classier because it produces more precise and accurate results relative to other models, such as decision trees.
+
+## Features used in ML model
+- health: current health status (numeric: from 1 - very bad to 5 - very good)
+- absences: number of school absences (numeric: from 0 to 93)
+- Medu: mother's education (numeric: 0 - none,  1 - primary education (4th grade), 2 – 5th to 9th grade, 3 – secondary education or 4 – higher education)
+- Fedu: father's education (numeric: 0 - none,  1 - primary education (4th grade), 2 – 5th to 9th grade, 3 – secondary education or 4 – higher education)
+- Dalc: workday alcohol consumption (numeric: from 1 - very low to 5 - very high)
+
+###Justification
+These features were selected because we believed that they directly influenced the student's performance and gave the highest accuracy compared to the other models we tested with a different set/combination of features. A student's well-being is crucial to deliver higher performance because the student will have lower burnout rates, be sick for fewer days, increase productivity, etc. Therefore, health and Dalc are features that directly impact the student well-being. Furthermore, the number of absences also influences the performance of a student because the student will not fall behind with their coursework if they have fewer absences. On the other hand, if the student continues to miss class, they will fall behind the coursework and have to catch up with work making it more difficult to perform well. In addition, Medu and Fedu were selected because we believed that a student whose parents went to secondary education or higher education is more encouraged to pursue higher education, thus putting more effort into performing well.
+
+## Training Model
+The model was trained using cross-validation. The data was initially separated into the independent variable data which contained the data from the five features selected and into dependent variable data which contained a column named qual_student where it gave the student a value of 1 if they had a G3 >= 15 or 0 otherwise. This data was then separated into training data and test data using the `train_test_split` method from `sklearn.model_selection`. Therefore, the model was trained using the training data and afterwards tested using the test data. The performance of the new model was compared to the baseline model (after we added cross-validation to the baseline model) using the same data. This test was performed various times (30+) with new training and test data, and on average the new model outperformed the baseline model, where the baseline had an average accuracy of about 74% and our model had an average accuracy of about 80%. The accuracy of the models was determined using the score method to measure the models performance on the test data. Also, the accuracy of the new model was further measured by visualizing the performance of the model with each of the rows in the dataset and it was determined that the model was more accurate than the baseline model.
+
+
+# Architectural Design Document
+https://docs.google.com/document/d/1AcHC4HS22Xgw1YPLwIEdWh6JbEKp5DzDLmYSTyPSHc0/edit?usp=sharing
+
 
 # HW4 Starter Code and Instructions
 
