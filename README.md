@@ -1,7 +1,6 @@
 # Swagger Documentation
 `api-doc.yaml` is under `/app` directory
 
-
 # Model Documentation
 The model used was a random forest classier because it produces more precise and accurate results relative to other models, such as decision trees.
 
